@@ -1,0 +1,65 @@
+.layout-container {
+  list-style: none;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  max-width: 1080px;
+  height: 12vh;
+  max-height: 100px;
+  margin: 0 auto;
+  
+}
+
+.nav-block {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+}
+
+.reset-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.active {
+  color: rgb(80, 80, 206);
+  border-bottom: 1px solid rgba(80, 80, 206, 0.7);
+}
+
+
+.logo {
+  font-family: 'Kaisei Decol', 'sans-serif';
+  font-size: 24px;
+  font-weight: 200;
+
+  margin-right: 10%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+}
+
+.search {
+  cursor: pointer;
+  user-select: none;
+}
+
+.btns {
+  display: flex;
+
+  gap: 40px;
+}
+
+.main {
+  width: 100%;
+  max-width: 1080px;
+  height: 88vh;
+  margin: 0 auto;
+}
