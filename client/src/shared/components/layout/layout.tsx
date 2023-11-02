@@ -8,7 +8,7 @@ const Layout: FC = () => {
 
     return (
       <>
-        <header>
+        <header className='header'>
           <ul className='layout-container'>
             <li className='nav-block'>
               <Link className='logo reset-link' to='main'>InterACT</Link>
@@ -19,8 +19,8 @@ const Layout: FC = () => {
               </div>
             </li>
             <li className='btns'>
-              <ButtonNav>Создать событие</ButtonNav>
-              <ButtonNav>Войти</ButtonNav>
+              <ButtonNav to={'sign-in'}>Создать событие</ButtonNav>
+              <ButtonNav to={'sign-up'}>Вход</ButtonNav>
             </li>
           </ul>
         </header>

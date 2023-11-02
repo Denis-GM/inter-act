@@ -29,6 +29,15 @@ const Elementary: FC = () => {
   return (
       <>
         <div>
+          <h2>Мои мероприятия</h2>
+        </div>
+        <div>
+          <h2>Редомендации</h2>
+        </div>
+        <div>
+          <h2>Подборки</h2>
+        </div>
+        <div>
         {data ? data.map((item: any) => (
           <div key={item.Id}>{item.Id} {item.Title}</div>)) 
           : <div>Loading...</div>

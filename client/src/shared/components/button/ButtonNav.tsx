@@ -1,12 +1,20 @@
-import {FC} from 'react';
+import { FC } from 'react';
 import './ButtonNav.css';
+import { redirect, useNavigate } from 'react-router-dom';
 
-const ButtonNav: FC<{children: any}> = ({children}) => {
+
+const ButtonNav: FC<props> = (props) => {
+  const navigate = useNavigate();
+
+  const onClickRedirect = () => {
+    navigate('/' + props.to)
+  }
+
   return(
-  <button className='btn'>
-    {children}
+  <button className='btn' onClick={onClickRedirect}>
+    {props.children}
   </button>
-  )
+  );
 };
 
 export default ButtonNav;
