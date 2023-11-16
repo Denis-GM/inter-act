@@ -7,7 +7,7 @@ const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const DBSOURCE = "db.sqlite";
 
-
+/*
 let db = new sqlite3.Database(DBSOURCE, (error) => {
   if (error) {
     console.error(error.message)
@@ -37,6 +37,7 @@ let db = new sqlite3.Database(DBSOURCE, (error) => {
     });  
   }
 });
+*/
 
 app.use(
   // express.urlencoded(),
@@ -51,37 +52,41 @@ app.get('/', (req, res) => {
   res.send('index.html')
 });
 
-app.get("/api/products", (req, res, next) => {
-  let sql = "SELECT * FROM Products"
-  let params = []
-  db.all(sql, params, (error, rows) => {
-    if (error) {
-      res.status(400).json({"error":error.message});
-      return;
-    }
-    else{
-      res.json({
-        "message":"success",
-        "data":rows
-      })
-    }
-  });
+// import events from './moks/events.json'
+app.get("/api/events", (req, res) => {
+  let events = require('./moks/events.json')
+  res.json(events)
+  // let sql = "SELECT * FROM Products"
+  // let params = []
+  // db.all(sql, params, (error, rows) => {
+  //   if (error) {
+  //     res.status(400).json({"error":error.message});
+  //     return;
+  //   }
+  //   else{
+  //     res.json({
+  //       "message":"success",
+  //       "data":rows
+  //     })
+  //   }
+  // });
 });
 
 app.get("/api/product/:id", (req, res, next) => {
-  const sql = "SELECT * FROM Products WHERE Id = ?";
-  db.get(sql, req.params.id, (err, rows) => {
-    if (err) {
-      res.status(400).json({"error": err.message});
-      return;
-    }
-    else{
-      res.json({
-        "message":"success",
-        "data":rows
-      })
-    }
-  });
+
+  // const sql = "SELECT * FROM Products WHERE Id = ?";
+  // db.get(sql, req.params.id, (err, rows) => {
+  //   if (err) {
+  //     res.status(400).json({"error": err.message});
+  //     return;
+  //   }
+  //   else{
+  //     res.json({
+  //       "message":"success",
+  //       "data":rows
+  //     })
+  //   }
+  // });
 });
 
 app.listen(port, () => {

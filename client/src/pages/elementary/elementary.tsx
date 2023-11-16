@@ -1,49 +1,42 @@
 import {FC, useState, useEffect} from 'react';
-import api from '../../core/core-settings';
+import axios from 'axios';
 import { Outlet } from 'react-router-dom';
+import ListMyEvents from './components/listMyEvents/listMyEvents';
+import './elementary.css' 
 
 const Elementary: FC = () => {
-  const [data, setData] = useState<any>(null);
+  const [events, setEvents] = useState<any>([]); 
 
-  const fetchData = async () => {
-    fetch(`${api.serverUrl}/api/products`)
-      .then(response => {
-        if(response.ok)
-          return response.json()
-        throw response
-      })
-      .then((data: any) => {
-        setData(data.data)
-        console.log(data)
-      })
-      .catch((error: any) => {
-        console.log(error)
-      })
-  }
+  async function getEvents() {
+    await axios.get('/api/events/')
+        .then((res: any) =>{
+            setEvents(res.data);
+            console.log(res.data);
+        })
+        .catch((err: Error) => {
+            console.log(err)
+        })
+    };
 
-  useEffect(() => {
-    fetchData()
-  }, []);
+    useEffect(() => {
+        getEvents();
+    }, [])
 
 
   return (
       <>
-        <div>
-          <h2>Мои мероприятия</h2>
+        <div className='main-container'>
+            <section className='section my-events-section'>
+                { events && <ListMyEvents events={events} />}
+            </section>
+            <section className='section'>
+                <h2>Редомендации</h2>
+            </section>
+            <section className='section'>
+                <h2>Подборки</h2>
+            </section>
         </div>
-        <div>
-          <h2>Редомендации</h2>
-        </div>
-        <div>
-          <h2>Подборки</h2>
-        </div>
-        <div>
-        {data ? data.map((item: any) => (
-          <div key={item.Id}>{item.Id} {item.Title}</div>)) 
-          : <div>Loading...</div>
-        }
-        </div>
-        <Outlet />
+        {/* <Outlet /> */}
       </>
   )
 }

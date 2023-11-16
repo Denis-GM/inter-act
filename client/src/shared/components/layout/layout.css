@@ -1,5 +1,6 @@
 .header {
   /* margin-bottom: 10px; */
+  /* background: rgba(190, 215, 254, 0.30); */
 }
 
 .layout-container {
@@ -61,10 +62,11 @@
 }
 
 .main {
+  position: relative;
   width: 100%;
-  max-width: 1080px;
+  /* max-width: 1080px; */
   height: 88vh;
 
   margin: 0 auto;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
