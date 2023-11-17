@@ -2,6 +2,13 @@
 	max-width: 1080px;
 	width: 80vw;
 	margin: 0 auto;
+
+	/* display: flex;
+	flex-direction: column; */
+}
+
+.input-city {
+	align-items: end;
 }
 
 .section {

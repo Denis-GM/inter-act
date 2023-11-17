@@ -1,11 +1,11 @@
-import {FC, useState, useEffect} from 'react';
+import {FC, useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { Outlet } from 'react-router-dom';
 import ListMyEvents from './components/listMyEvents/listMyEvents';
 import './elementary.css' 
+import ListRecEvents from './components/listRecEvents/listrecEvents';
 
 const Elementary: FC = () => {
-  const [events, setEvents] = useState<any>([]); 
+  const [events, setEvents] = useState<any>([]);
 
   async function getEvents() {
     await axios.get('/api/events/')
@@ -26,17 +26,17 @@ const Elementary: FC = () => {
   return (
       <>
         <div className='main-container'>
-            <section className='section my-events-section'>
-                { events && <ListMyEvents events={events} />}
-            </section>
-            <section className='section'>
-                <h2>Редомендации</h2>
-            </section>
-            <section className='section'>
-                <h2>Подборки</h2>
-            </section>
+          <div className='input-city'>Город / Екатеринбург</div>
+          <section className='section my-events-section'>
+            { events && <ListMyEvents events={events} />}
+          </section>
+          <section className='section'>
+            { events && <ListRecEvents events={events} />}
+          </section>
+          <section className='section'>
+              <h2>Популярные подборки</h2>
+          </section>
         </div>
-        {/* <Outlet /> */}
       </>
   )
 }

@@ -1,17 +1,17 @@
 import {FC, useState} from 'react';
-import './listMyEvents.css';
+import './listRecEvents.css';
 import SectionTitle from '../../../../shared/components/sectionTitle/sectionTitle';
 
-const ListMyEvents: FC<{events: any}> = ({events}) => {
-    const [isActiveMyEvents, setIsActiveMyEvents] = useState(true);
+const ListRecEvents: FC<{events: any}> = ({events}) => {
+    const [isActiveRecEvents, setIsActiveRecEvents] = useState(true);
 
-    function updateActiveMyEvents() {
-        setIsActiveMyEvents(isActiveMyEvents => !isActiveMyEvents);
+    function updateActiveRecEvents() {
+        setIsActiveRecEvents(isActiveMyEvents => !isActiveMyEvents);
     }
 
     return (<>
-    <SectionTitle text="Мои мероприятия" func={updateActiveMyEvents}/>
-    {isActiveMyEvents && 
+    <SectionTitle text="Редомендации" func={updateActiveRecEvents}/>
+    {isActiveRecEvents && 
     <div className='content'>
         {events.map((event: any) => (
             <div className='event-block' key={event.id}>
@@ -30,4 +30,4 @@ const ListMyEvents: FC<{events: any}> = ({events}) => {
     </>)
 };
 
-export default ListMyEvents;
+export default ListRecEvents;

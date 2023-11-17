@@ -40,7 +40,6 @@ let db = new sqlite3.Database(DBSOURCE, (error) => {
 */
 
 app.use(
-  // express.urlencoded(),
   cors(
     { origin: `http://localhost:5173`, }
   )
