@@ -7,12 +7,13 @@ import SectionTitle from '../../shared/SectionTitle/SectionTitle';
 import './elementary.css';
 
 const Elementary: FC = () => {
-  const [events, setEvents] = useState<any>([]);
+  const [events, setEvents] = useState<any>();
+  const [recEvents, setRecEvents] = useState<any>([]);
 
-  async function getEvents() {
+  async function getRecEvents() {
     try {
       const res = await axios.get('/api/events/');
-      setEvents(res.data);
+      setRecEvents(res.data);
       console.log(res.data);
     }
     catch(err){
@@ -21,19 +22,19 @@ const Elementary: FC = () => {
   };
 
   useEffect(() => {
-      getEvents();
+    getRecEvents();
   }, [])
 
 
   return (
     <div className='main-container'>
       <div className='input-city'>Город / Екатеринбург</div>
-      <section className='section my-events-section'>
-        { events && <ListMyEvents events={events} />}
-      </section>
+      { events && 
+        <section className='section my-events-section'>
+         <ListMyEvents events={events} />
+      </section>}
       <section className='section'>
-        <SectionTitle text="Редомендации" />
-        {/* { events && <ListRecEvents events={events} />} */}
+        { recEvents && <ListRecEvents events={recEvents} />}
       </section>
       <section className='section'>
         <SectionTitle text="Популярные подборки" />

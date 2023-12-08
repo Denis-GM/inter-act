@@ -22,6 +22,7 @@ const sql_events = `CREATE TABLE IF NOT EXISTS Events (
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   organizer_id INTEGER,
+  subscribers INTEGER,
   city TEXT NOT NULL,
   date TEXT NOT NULL,
   time_start TEXT NOT NULL,

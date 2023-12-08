@@ -1,9 +1,13 @@
 import {FC} from 'react';
 import './Organizers.css';
+import Search from '../../shared/Search/Search';
 
 const Organizers: FC = () => {
   return(
-    <>Organizers</>
+    <>
+      <Search></Search>
+      Organizers
+    </>
   )
 }
 

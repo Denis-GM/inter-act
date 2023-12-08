@@ -2,12 +2,12 @@ import { FC, HTMLProps } from 'react';
 import './ButtonStd.css';
 
 interface ButtonProps extends HTMLProps<HTMLButtonElement>{
-  // func?(): void
+  func?(): void
 }
 
-const ButtonStd: FC<ButtonProps> = ({...props}) => {
+const ButtonStd: FC<ButtonProps> = ({func, ...props}) => {
   return(
-    <button className='button-standard'>
+    <button className='button-standard' onClick={func}>
       {props.children}
     </button>
   );

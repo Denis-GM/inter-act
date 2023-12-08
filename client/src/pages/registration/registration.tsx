@@ -17,6 +17,8 @@ const Registration: FC = () => {
 
   const navigate = useNavigate();
   
+
+  // Исправить 
   const onSubmit = (data: any) => {
     const fullName: string = watch("full_name");
     const email: string = watch("email");

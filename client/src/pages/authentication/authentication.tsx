@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import ValidatedInput from '../../shared/ValidatedInput/ValidatedInput';
 import ButtonStd from '../../shared/ButtonStd/ButtonStd';
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './authentication.css';

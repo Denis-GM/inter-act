@@ -18,10 +18,6 @@ app.use(
   )
 );
 
-// app.use(bodyParser.urlencoded({
-//   extended: true
-// }));
-
 app.use(express.static('src/static'));
 
 app.get('/', (req, res) => {
