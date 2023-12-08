@@ -3,41 +3,14 @@ const app = express();
 const port = 3000;
 
 const cors = require('cors');
+const { Database } = require('sqlite3');
 
 const sqlite3 = require('sqlite3').verbose();
-const DBSOURCE = "db.sqlite";
+const db = new sqlite3.Database('db.sqlite');
 
-/*
-let db = new sqlite3.Database(DBSOURCE, (error) => {
-  if (error) {
-    console.error(error.message)
-    throw error
-  }
-  else
-  {
-    db.run(`CREATE TABLE Products (
-        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-        Title TEXT,             
-        Quantity INTEGER,             
-        DateModified DATE,
-        DateCreated DATE
-        )`,
-    (error) => {
-        if (error) {
-          console.log("Table already created")
-        }
-        else {
-            var insert = 'INSERT INTO Products (Title, Quantity, DateCreated) VALUES (?,?,?)'
-            db.run(insert, ["Baseball", 3, Date('now')])
-            db.run(insert, ["Football", 5, Date('now')])
-            db.run(insert, ["Apple", 6, Date('now')])
-            db.run(insert, ["Orange", 7, Date('now')])
-            console.log("A table was created")
-        }
-    });  
-  }
-});
-*/
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json();
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.use(
   cors(
@@ -45,47 +18,103 @@ app.use(
   )
 );
 
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
+
 app.use(express.static('src/static'));
 
 app.get('/', (req, res) => {
   res.send('index.html')
 });
 
-// import events from './moks/events.json'
 app.get("/api/events", (req, res) => {
-  let events = require('./moks/events.json')
-  res.json(events)
-  // let sql = "SELECT * FROM Products"
-  // let params = []
-  // db.all(sql, params, (error, rows) => {
-  //   if (error) {
-  //     res.status(400).json({"error":error.message});
-  //     return;
-  //   }
-  //   else{
-  //     res.json({
-  //       "message":"success",
-  //       "data":rows
-  //     })
-  //   }
-  // });
+  let sql = "SELECT * FROM Events"
+  let params = []
+  db.all(sql, params, (error, rows) => {
+    if (error) {
+      res.status(400).json({"error":error.message});
+      return;
+    }
+    else{
+      res.status(200).json(rows);
+    }
+  });
 });
 
-app.get("/api/product/:id", (req, res, next) => {
+app.get("/api/event/:id", (req, res) => {
+  const sql = "SELECT * FROM Events WHERE id = ?";
+  db.get(sql, req.params.id, (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else{
+      res.status(200).json(rows)
+    }
+  });
+});
 
-  // const sql = "SELECT * FROM Products WHERE Id = ?";
-  // db.get(sql, req.params.id, (err, rows) => {
-  //   if (err) {
-  //     res.status(400).json({"error": err.message});
-  //     return;
-  //   }
-  //   else{
-  //     res.json({
-  //       "message":"success",
-  //       "data":rows
-  //     })
-  //   }
-  // });
+app.post("/api/event", jsonParser, (req, res) => {
+  const data = req.body;
+  const sql = `INSERT INTO Events
+  (title, description, organizer_id, city, time_start, time_end, photo)
+  VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  db.run(sql, [data.title, data.description, data.organizer_id, data.city, data.time_start, data.time_end, data.photo], 
+    (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else{
+      res.status(201);
+    }
+  });
+});
+
+app.post("/api/register", jsonParser, (req, res, next) => {
+  const data = req.body;
+  const sql = `INSERT INTO Users
+  (full_name, email, login, password, photo)
+  VALUES (?, ?, ?, ?, ?)`;
+  db.run(sql, [data.full_name, data.email, data.login, data.password, null], 
+    (err) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else{
+      res.status(201);
+    }
+  });
+});
+
+app.post("/api/login", jsonParser, (req, res) => {
+  const data = req.body;
+  const sql = "SELECT * FROM Users WHERE login = ? AND password = ?";
+  db.get(sql, [data.login, data.password], (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else {
+      res.status(200).json(rows)
+    }
+  });
+});
+
+app.post("/api/account", jsonParser, (req, res) => {
+  const data = req.body;
+  const sql = "SELECT * FROM Users WHERE id = ?";
+  db.get(sql, [data.id], (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else {
+      res.status(200).json(rows)
+    }
+  });
 });
 
 app.listen(port, () => {

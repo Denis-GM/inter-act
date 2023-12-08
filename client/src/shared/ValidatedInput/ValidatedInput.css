@@ -1,0 +1,38 @@
+.label {
+	display: block;
+	position: relative;
+	width: 100%;
+}
+
+.text {
+	font-size: 14px;
+	margin-bottom: 7px;
+}
+
+.input-block {
+	position: relative;
+	width: 100%;
+	padding: 7px 20px 7px 20px;
+	border: 1px solid rgba(10, 10, 10, 30%);
+	border-right: none;
+	border-radius: 3px;
+	background: #FFF;
+}
+
+.input {
+	/* display: block; */
+	border: none;
+	/* border-radius: 7px; */
+	font-family: 'Times New Roman', Times;
+}
+
+.indicator {
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	background-color: #FBCF5F;
+	width: 7px;
+	height: 100%;
+	border-radius: 0px 3px 3px 0px;
+}

@@ -1,8 +1,8 @@
 import {FC, useState, useEffect} from 'react';
 import axios from 'axios';
-import ListMyEvents from './components/listMyEvents/listMyEvents';
-import ListRecEvents from './components/listRecEvents/listrecEvents';
-import SectionTitle from '../../shared/components/sectionTitle/sectionTitle';
+import ListMyEvents from './components/ListMyEvents/ListMyEvents';
+import ListRecEvents from './components/ListRecEvents/ListrecEvents';
+import SectionTitle from '../../shared/SectionTitle/SectionTitle';
 
 import './elementary.css';
 
@@ -13,6 +13,7 @@ const Elementary: FC = () => {
     try {
       const res = await axios.get('/api/events/');
       setEvents(res.data);
+      console.log(res.data);
     }
     catch(err){
       console.log(err);

@@ -1,39 +1,59 @@
-const sqlite3 = require('sqlite3').verbose()
-// const db = new sqlite3.Database(':memory:')
-const db = new sqlite3.Database('db.sqlite')
+const sqlite3 = require('sqlite3').verbose();
+
+// const db_name = path.join("db.sqlite");
+const db = new sqlite3.Database("db.sqlite", err => {
+  if (err) {
+    return console.error(err.message);
+  }
+  console.log("Successful connection to the database 'db.sqlite'");
+});
+
+const sql_users = `CREATE TABLE IF NOT EXISTS Users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name TEXT,
+  email TEXT NOT NULL,
+  login TEXT NOT NULL,
+  password TEXT NOT NULL,
+  photo BLOB
+);`;
+
+const sql_events = `CREATE TABLE IF NOT EXISTS Events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  organizer_id INTEGER,
+  city TEXT NOT NULL,
+  date TEXT NOT NULL,
+  time_start TEXT NOT NULL,
+  time_end TEXT NOT NULL,
+  photo BLOB NULL,
+  FOREIGN KEY (organizer_id) REFERENCES Users (id) ON DELETE CASCADE
+);`;
+
+const sql_comments = `CREATE TABLE IF NOT EXISTS Comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  text TEXT NOT NULL,
+  event_id INTEGER,
+  author_id INTEGER,
+  FOREIGN KEY (event_id) REFERENCES Events (id) ON DELETE CASCADE,
+  FOREIGN KEY (author_id) REFERENCES Users (id) ON DELETE CASCADE
+);`;
 
 db.serialize(() => {
-  db.run(`CREATE TABLE Products (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Title TEXT,             
-    Quantity INTEGER,             
-    DateModified DATE,
-    DateCreated DATE
-    )`,
-    (error) => {
-      if (error) {
-        console.log("Table already created")
-      }
-      else {
-          var insert = 'INSERT INTO Products (Title, Quantity, DateCreated) VALUES (?,?,?)'
-          db.run(insert, ["Baseball", 3, Date('now')])
-          db.run(insert, ["Football", 5, Date('now')])
-          db.run(insert, ["Apple", 6, Date('now')])
-          db.run(insert, ["Orange", 7, Date('now')])
-          console.log("A table was created")
-      }
+  db.run(sql_users, err => {
+    if (err) return console.error(err.message);
+    console.log("Successful creation of the 'Users' table");
   });
-  // const stmt = db.prepare('INSERT INTO lorem VALUES (?)')
-
-  // for (let i = 0; i < 10; i++) {
-  //   stmt.run(`Ipsum ${i}`)
-  // }
-
-  // stmt.finalize()
-
-  // db.each('SELECT rowid AS id, info FROM lorem', (err, row) => {
-  //   console.log(`${row.id}: ${row.info}`)
-  // })
+  
+  db.run(sql_events, err => {
+    if (err) return console.error(err.message);
+    console.log("Successful creation of the 'Events' table");
+  });
+  
+  db.run(sql_comments, err => {
+    if (err) return console.error(err.message);
+    console.log("Successful creation of the 'Comments' table");
+  });
 })
 
 db.close()

@@ -1,0 +1,20 @@
+.profile-main-block {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.photo-profile {
+
+}
+
+.profile-main-block__content {
+  
+}
+
+.profile-main-block_h {
+
+}
+
+.btn-exit {
+  width: 200px;
+}

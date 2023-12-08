@@ -1,6 +1,6 @@
 import {FC, useState} from 'react';
 import './listRecEvents.css';
-import SectionTitle from '../../../../shared/components/sectionTitle/sectionTitle';
+import SectionTitle from '../../../../shared/SectionTitle/SectionTitle';
 
 const ListRecEvents: FC<{events: any}> = ({events}) => {
     const [isActiveRecEvents, setIsActiveRecEvents] = useState(true);

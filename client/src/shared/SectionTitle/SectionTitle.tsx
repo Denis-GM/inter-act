@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import './sectionTitle.css';
+import './SectionTitle.css';
 
 const SectionTitle: FC<{text: string, func?: () => void}> = ({text, func}) => {
     return(

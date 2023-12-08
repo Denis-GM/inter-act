@@ -1,0 +1,16 @@
+.button-standard {
+  width: 100%;
+  position: relative;
+
+	padding: 5px 20px;
+	border-radius: 12px;
+  border: none;
+  background-color: rgb(84, 84, 212);
+  color: azure;
+
+  cursor: pointer;
+}
+
+.button-standard:hover {
+  
+}
