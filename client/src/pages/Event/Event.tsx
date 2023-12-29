@@ -29,6 +29,11 @@ const Event: FC = () => {
         {/* <img src='../../assets/img/cat1.jpg' alt="event" /> */}
       </div>
 			<div className='title-e'>{event.title}</div>
+      <div className='title-el'>
+        <div>-</div>
+        <div>ВЫ ЗАПИСАНЫ НА ДАННОЕ МЕРОПРИЯТИЕ</div>
+        <div>+</div>
+      </div>
       <div className='event-container'>
         <div style={{width: '60%'}}>
           <div className='data'>{event.description}</div>

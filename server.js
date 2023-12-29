@@ -38,6 +38,20 @@ app.get("/api/events", (req, res) => {
   });
 });
 
+app.get("/api/collections", (req, res) => {
+  let sql = "SELECT * FROM Collections"
+  let params = []
+  db.all(sql, params, (error, rows) => {
+    if (error) {
+      res.status(400).json({"error":error.message});
+      return;
+    }
+    else{
+      res.status(200).json(rows);
+    }
+  });
+});
+
 app.get("/api/event/:id", (req, res) => {
   const sql = "SELECT * FROM Events WHERE id = ?";
   db.get(sql, req.params.id, (err, rows) => {
@@ -110,6 +124,33 @@ app.post("/api/account", jsonParser, (req, res) => {
     else {
       res.status(200).json(rows)
     }
+  });
+});
+
+app.post("/api/subscribe", jsonParser, (req, res) => {
+  const data = req.body;
+  const sql = `INSERT INTO SubscribeEvent
+  (event_id, subscriber_id)
+  VALUES (?, ?)`;
+  db.run(sql, [data.event_id, data.subscriber_id], (err, rows) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    else {
+      res.status(201).json(rows)
+    }
+  });
+});
+
+app.delete("/api/subscribe", (req, res) => {
+  const sql = `DELETE FROM SubscribeEvent WHERE id = ?`
+  db.run(sql, req.params.id, (err, result) => {
+    if (err) {
+      res.status(400).json({ "error": res.message })
+      return;
+    }
+    res.status(200).json({ deletedID: this.changes })
   });
 });
 

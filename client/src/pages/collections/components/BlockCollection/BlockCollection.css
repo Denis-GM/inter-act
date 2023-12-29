@@ -1,0 +1,31 @@
+.block-collection {
+  width: 30%;
+  position: relative;
+  margin-bottom: 50px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+
+  top: 0;
+  transition: top 500ms;
+}
+
+.block-collection:hover {
+  box-shadow: none;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+
+  position: relative;
+  top: -10px;
+}
+
+.block-collection__img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 150px;
+}
+
+.block-collection_h {
+  margin: 10px 0;
+  text-align: center;
+}
