@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import ValidatedInput from '../../shared/ValidatedInput/ValidatedInput';
-import ButtonStd from '../../shared/ButtonStd/ButtonStd';
+import ValidatedInput from '../../components/ValidatedInput/ValidatedInput';
+import ButtonStd from '../../components/ButtonStd/ButtonStd';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -11,29 +11,32 @@ const Authentication: FC = () => {
     register, 
     handleSubmit,  
     watch,
-    formState: { errors } 
-  } = useForm();
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      login: '',
+      password: ''
+    }
+  });
   
   const navigate = useNavigate();
 
-  const onSubmit = () => {
+  const handleLogin = (data: any) => {
     const login: string = watch("login");
     const password: string = watch("password");
-    if(login.length > 4 && password.length > 4) {
-      postAccount(
-        {login: login, password: password}
-      );
-    }
-    else {
-      console.log('invalid')
-    }
+    postAccount({login: login, password: password});
   }
+
+  const handleError = (errors: any) => {
+    console.log(errors);
+  };
 
 	async function postAccount(data: any) {
 		try {
       const res = await axios.post('/api/login', data);
+      if(res.statusText == 'OK')
+        console.log(res);
       const resData: any = res.data;
-      console.log(resData);
       localStorage.setItem('auth-token', resData.id);
       localStorage.setItem('name', resData.full_name);
       localStorage.setItem('login', resData.login);
@@ -49,20 +52,20 @@ const Authentication: FC = () => {
 		<div className='container'>
 			<h3 className='title'>Вход</h3>
       <div className='main-block'>
-        <form onSubmit={handleSubmit(onSubmit)} 
+        <form onSubmit={handleSubmit(handleLogin, handleError)} 
           className='main-block__form'>
           <div>
             <div className='input-auth'>
               <ValidatedInput text="Логин" type="text" 
                 placeholder='login123' 
-                {...register("login", { required: true })}
-                validated />
+                {...register("login", { required: true })} 
+              />
             </div>
             <div className='input-auth'>
               <ValidatedInput text="Пароль" type="password" 
                 placeholder='554409' 
                 {...register("password", { required: true })}
-                validated />
+              />
             </div>
             <Link to="/sign-up" className='link-registr'>
               Еще нет аккаунта? Зарегистрироваться

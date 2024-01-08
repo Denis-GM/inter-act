@@ -2,7 +2,7 @@ import {FC, useEffect, useState} from 'react';
 import './Event.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import ButtonStd from '../../shared/ButtonStd/ButtonStd';
+import ButtonStd from '../../components/ButtonStd/ButtonStd';
 
 const Event: FC = () => {
   const params = useParams();

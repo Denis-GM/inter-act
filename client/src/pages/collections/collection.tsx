@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import Search from '../../shared/Search/Search';
+// import Search from '../../shared/Search/Search';
 import axios from 'axios';
 import BlockCollection from './components/BlockCollection/BlockCollection';
 
@@ -44,6 +44,7 @@ const Collections: FC = () => {
         <input type="search" placeholder="Поиск по названию"
             className="search" onChange={el => search(el)} name="search"/>
       </form>
+      
       <div className='collections-container'>
         {collections.map((collection: any) => (
           <BlockCollection key={collection.id} collection={collection} />)

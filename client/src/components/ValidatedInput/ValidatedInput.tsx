@@ -16,7 +16,7 @@ const ValidatedInput = forwardRef<HTMLInputElement | InputProps, IInputProps>(
             <div className="text">{text}</div>
             <div className="input-block">
                 <input {...props} className="input" ref={ref}/>
-                { validated && <div className="indicator"></div>}
+                {/* { validated && <div className="indicator"></div>} */}
             </div>
         </div>
     )

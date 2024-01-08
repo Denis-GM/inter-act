@@ -4,9 +4,9 @@ import { createBrowserRouter,
   Route, 
   RouterProvider } 
   from 'react-router-dom';
-import Elementary from './pages/elementary/Elementary';
+import Home from './pages/Home/Home';
 import Collections from './pages/Collections/Collection';
-import Layout from './shared/Layout/Layout';
+import Layout from './components/Layout/Layout';
 import Authentication from './pages/Authentication/Authentication';
 import Registration from './pages/Registration/Registration';
 import CreateEvent from './pages/CreateEvent/CreateEvent';
@@ -19,7 +19,7 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route path="event/:id" element={<Event />} />
-        <Route path="main" element={<Elementary />} />
+        <Route path="main" element={<Home />} />
         <Route path="collections" element={<Collections />} />
         <Route path='create-event' element={<CreateEvent />} />
         <Route path="organizers" element={<Organizers />} />

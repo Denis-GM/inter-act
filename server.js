@@ -30,9 +30,8 @@ app.get("/api/events", (req, res) => {
   db.all(sql, params, (error, rows) => {
     if (error) {
       res.status(400).json({"error":error.message});
-      return;
     }
-    else{
+    else {
       res.status(200).json(rows);
     }
   });
@@ -44,7 +43,6 @@ app.get("/api/collections", (req, res) => {
   db.all(sql, params, (error, rows) => {
     if (error) {
       res.status(400).json({"error":error.message});
-      return;
     }
     else{
       res.status(200).json(rows);
@@ -57,7 +55,6 @@ app.get("/api/event/:id", (req, res) => {
   db.get(sql, req.params.id, (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
     }
     else{
       res.status(200).json(rows)
@@ -74,7 +71,6 @@ app.post("/api/event", jsonParser, (req, res) => {
     (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
     }
     else{
       res.status(201);
@@ -82,6 +78,8 @@ app.post("/api/event", jsonParser, (req, res) => {
   });
 });
 
+
+// Регистрация
 app.post("/api/register", jsonParser, (req, res, next) => {
   const data = req.body;
   const sql = `INSERT INTO Users
@@ -91,24 +89,26 @@ app.post("/api/register", jsonParser, (req, res, next) => {
     (err) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
     }
-    else{
+    else {
       res.status(201);
     }
   });
 });
 
+// Авторизация
 app.post("/api/login", jsonParser, (req, res) => {
   const data = req.body;
   const sql = "SELECT * FROM Users WHERE login = ? AND password = ?";
   db.get(sql, [data.login, data.password], (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
+    }
+    else if(rows) {
+      res.status(200).json(rows)
     }
     else {
-      res.status(200).json(rows)
+      res.status(400).send('Invalid login or password');
     }
   });
 });
@@ -119,7 +119,6 @@ app.post("/api/account", jsonParser, (req, res) => {
   db.get(sql, [data.id], (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
     }
     else {
       res.status(200).json(rows)
@@ -135,7 +134,6 @@ app.post("/api/subscribe", jsonParser, (req, res) => {
   db.run(sql, [data.event_id, data.subscriber_id], (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
-      return;
     }
     else {
       res.status(201).json(rows)
@@ -148,9 +146,10 @@ app.delete("/api/subscribe", (req, res) => {
   db.run(sql, req.params.id, (err, result) => {
     if (err) {
       res.status(400).json({ "error": res.message })
-      return;
     }
-    res.status(200).json({ deletedID: this.changes })
+    else {
+      res.status(200).json({ deletedID: this.changes })
+    }
   });
 });
 

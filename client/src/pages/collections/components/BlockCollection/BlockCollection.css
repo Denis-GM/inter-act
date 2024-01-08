@@ -19,12 +19,6 @@
   top: -10px;
 }
 
-.block-collection__img {
-  border-radius: 5px 5px 0 0;
-  width: 100%;
-  height: 150px;
-}
-
 .block-collection_h {
   margin: 10px 0;
   text-align: center;

@@ -1,6 +1,6 @@
 import {FC} from 'react';
-import ButtonStd from '../../shared/ButtonStd/ButtonStd';
-import ValidatedInput from '../../shared/ValidatedInput/ValidatedInput';
+import ButtonStd from '../../components/ButtonStd/ButtonStd';
+import ValidatedInput from '../../components/ValidatedInput/ValidatedInput';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';

@@ -1,6 +1,7 @@
 import {FC} from 'react';
+import Search from '../../components/Search/Search';
+
 import './Organizers.css';
-import Search from '../../shared/Search/Search';
 
 const Organizers: FC = () => {
   return(

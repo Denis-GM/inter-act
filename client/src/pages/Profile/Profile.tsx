@@ -1,8 +1,9 @@
 import {FC, useEffect, useState} from 'react';
-import './Profile.css';
-import ButtonStd from '../../shared/ButtonStd/ButtonStd';
+import ButtonStd from '../../components/ButtonStd/ButtonStd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
+import './Profile.css';
 
 
 const Profile: FC = () => {
