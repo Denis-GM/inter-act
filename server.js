@@ -126,11 +126,34 @@ app.post("/api/account", jsonParser, (req, res) => {
   });
 });
 
+// Получить подписку
+app.post("/api/existSubscribe", jsonParser, (req, res) => {
+  const data = req.body;
+  const sql = `SELECT * FROM SubscribeEvent WHERE event_id = ? AND subscriber_id = ?`
+  db.get(sql, [data.event_id, data.subscriber_id], (err, result) => {
+    if (err) {
+      res.status(400).json({ "error": res.message })
+    }
+    else {
+      if(result)
+        res.status(200).json({idSubscribe: result.id, exist: true })
+      else 
+        res.status(200).json({ exist: false })
+    }
+  });
+});
+
+// Подписаться на событие 
 app.post("/api/subscribe", jsonParser, (req, res) => {
   const data = req.body;
-  const sql = `INSERT INTO SubscribeEvent
-  (event_id, subscriber_id)
-  VALUES (?, ?)`;
+  const sql = `
+    INSERT INTO SubscribeEvent (event_id, subscriber_id)
+    VALUES (?, ?)`;
+    // IF NOT EXISTS (
+    //   SELECT * 
+    //   FROM SubscribeEvent 
+    //   WHERE event_id = ${data.event_id} AND subscriber_id = ${data.subscriber_id}
+    // )
   db.run(sql, [data.event_id, data.subscriber_id], (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
@@ -141,7 +164,8 @@ app.post("/api/subscribe", jsonParser, (req, res) => {
   });
 });
 
-app.delete("/api/subscribe", (req, res) => {
+// Отписаться от события
+app.delete("/api/subscribe/:id", (req, res) => {
   const sql = `DELETE FROM SubscribeEvent WHERE id = ?`
   db.run(sql, req.params.id, (err, result) => {
     if (err) {
@@ -152,6 +176,21 @@ app.delete("/api/subscribe", (req, res) => {
     }
   });
 });
+
+function checkSubscription(event_id, subscriber_id) {
+  const sql = 'SELECT * FROM SubscribeEvent WHERE event_id = ? AND subscriber_id = ?';
+  console.log(event_id, subscriber_id);
+  db.get(sql, [event_id, subscriber_id], 
+    (err, rows) => {
+      if (err) {
+        return false;
+      }
+      else {
+        return rows;
+      }
+    }
+  )
+}
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)

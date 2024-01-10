@@ -13,8 +13,8 @@
 	position: relative;
 	width: 100%;
 	border: 1px solid rgba(10, 10, 10, 30%);
-	border-right: none;
-	border-radius: 3px;
+	/* border-right: none; */
+	border-radius: 7px;
 	background: #FFF;
 }
 
@@ -22,7 +22,7 @@
 	border: none;
 	width: 100%;
 	padding: 7px 20px 7px 20px;
-	border-radius: 3px;
+	border-radius: 7px;
 	font-family: 'Times New Roman', Times;
 }
 

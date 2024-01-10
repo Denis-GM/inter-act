@@ -1,3 +1,7 @@
+:root {
+  --border-color: rgb(137, 134, 128);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

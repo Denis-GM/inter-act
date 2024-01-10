@@ -12,7 +12,7 @@ const ListRecEvents: FC<{events: any}> = ({events}) => {
     }
 
     return (<>
-        <SectionTitle text="Редомендации" func={updateActiveRecEvents}/>
+        <SectionTitle func={updateActiveRecEvents}>Редомендации</SectionTitle>
         {isActiveRecEvents && 
         <div className='content'>
             {events.map((event: any) => (

@@ -19,10 +19,7 @@
 .event-block__header {
   width: 100%;
   height: 150px;
-  background-image: url('../../assets/img/cat1.jpg');
-  /* background-clip: border-box; */
-  background-repeat: no-repeat;
-  background-size: cover;
+  position: relative;
 
   border-radius: 4px 4px 0 0;
 }

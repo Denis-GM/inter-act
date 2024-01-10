@@ -8,7 +8,7 @@ interface IImageBox {
     className?: string,
 }
 
-const ImageBox: FC<IImageBox> = ({data, alt = '', className = ''}) => {
+const ImageBox: FC<IImageBox> = ({data, alt = '', className = 'block-collection__img'}) => {
     const [photo, setPhoto] = useState<any>();
   
     useEffect(() => {

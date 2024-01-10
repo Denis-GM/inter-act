@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import './Profile.css';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
 
 
 const Profile: FC = () => {
@@ -53,21 +54,21 @@ const Profile: FC = () => {
             <span className='profile-input-block__data'>{account.password}</span>
           </label>
           <div className='profile-btns'>
-            <div className='btn-exit' onClick={exitAccount}>
-              <ButtonStd>Выйти</ButtonStd>
+            <div className='btn-exit' >
+              <ButtonStd onClick={exitAccount}>Выйти</ButtonStd>
             </div>
-            <div className='btn-exit' onClick={exitAccount}>
-              <ButtonStd>Изменить данные</ButtonStd>
+            <div className='btn-exit'>
+              <ButtonStd onClick={exitAccount}>Изменить данные</ButtonStd>
             </div>
           </div>
         </div>
       </div>
       <div className='profile-events-created'>
-        <h3 className='profile-events-created_h'>Созданные мероприятия</h3>
+        <SectionTitle>Созданные мероприятия</SectionTitle>
         <div></div>
       </div>
       <div className='profile-planned-events'>
-        <h3 className='profile-planned-events_h'>Запланированные мероприятия</h3>
+        <SectionTitle>Запланированные мероприятия</SectionTitle>
         <div></div>
       </div>
     </>

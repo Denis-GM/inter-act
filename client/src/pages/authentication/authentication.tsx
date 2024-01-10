@@ -7,12 +7,7 @@ import { useForm } from 'react-hook-form';
 import './authentication.css';
 
 const Authentication: FC = () => {
-  const { 
-    register, 
-    handleSubmit,  
-    watch,
-    formState: { errors }
-  } = useForm({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
       login: '',
       password: ''
@@ -22,9 +17,7 @@ const Authentication: FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = (data: any) => {
-    const login: string = watch("login");
-    const password: string = watch("password");
-    postAccount({login: login, password: password});
+    postAccount({login: data.login, password: data.password});
   }
 
   const handleError = (errors: any) => {
@@ -38,6 +31,7 @@ const Authentication: FC = () => {
         console.log(res);
       const resData: any = res.data;
       localStorage.setItem('auth-token', resData.id);
+      localStorage.setItem('id', resData.id);
       localStorage.setItem('name', resData.full_name);
       localStorage.setItem('login', resData.login);
       navigate("/main");

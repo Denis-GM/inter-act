@@ -37,7 +37,7 @@ const Elementary: FC = () => {
             { recEvents && <ListRecEvents events={recEvents} />}
         </section>
         <section className='section'>
-            <SectionTitle text="Популярные подборки" />
+            <SectionTitle>Популярные подборки</SectionTitle>
         </section>
         </div>
     )

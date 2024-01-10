@@ -1,9 +1,13 @@
-import { FC } from 'react';
+import { Children, FC, HTMLProps } from 'react';
 import './SectionTitle.css';
 
-const SectionTitle: FC<{text: string, func?: () => void}> = ({text, func}) => {
+export interface IHeading extends HTMLProps<HTMLHeadingElement>{
+    func?(): void
+}
+
+const SectionTitle: FC<IHeading> = ({func, ...props}) => {
     return(
-        <h2 className='event-title' onClick={func}>{text}</h2>
+        <h2 className='event-title' onClick={func}>{props.children}</h2>
     );
 }
 
