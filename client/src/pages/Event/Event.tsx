@@ -62,7 +62,7 @@ const Event: FC = () => {
     return(
         <>
             <div className='event-img'>
-                {event.photo && <ImageBox data={event.photo.data} className='block-event__img'></ImageBox>}
+                {event.photo && <ImageBox data={event.photo} className='block-event__img'></ImageBox>}
             </div>
                     <div className='title-e'>{event.title}</div>
             <div className='title-el'>

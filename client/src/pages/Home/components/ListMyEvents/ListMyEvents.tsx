@@ -4,7 +4,7 @@ import EventBlock from '../../../../components/EventBlock/EventBlock';
 
 import './ListMyEvents.css';
 
-const ListMyEvents: FC<{events: any}> = ({events}) => {
+const ListMyEvents: FC<{title: string, events: any}> = ({title, events}) => {
   const [isActiveMyEvents, setIsActiveMyEvents] = useState(true);
 
   function updateActiveMyEvents() {
@@ -12,7 +12,7 @@ const ListMyEvents: FC<{events: any}> = ({events}) => {
   }
 
   return (<>
-  <SectionTitle func={updateActiveMyEvents}>Мои мероприятия</SectionTitle>
+  <SectionTitle func={updateActiveMyEvents}>{title}</SectionTitle>
   {isActiveMyEvents && 
     <div className='content'>
       {events.map((event: any) => (

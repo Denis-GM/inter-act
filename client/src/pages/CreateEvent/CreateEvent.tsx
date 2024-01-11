@@ -1,63 +1,78 @@
 import {FC, useRef, useState} from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import './CreateEvent.css';
 import ValidatedInput from '../../components/ValidatedInput/ValidatedInput';
 import ButtonStd from '../../components/ButtonStd/ButtonStd';
 
+import './CreateEvent.css';
+
+const fileToDataUri = (file: any) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      resolve(event.target.result)
+    };
+    reader.readAsDataURL(file);
+})
+
 const CreateEvent: FC = () => {
 	const [photo, setPhoto] = useState<any>();
+	const [dataUri, setDataUri] = useState<any>();
 	const imgRef = useRef(null);
+	const navigate = useNavigate();
 	
 	const { register, handleSubmit, watch, formState: { errors } } = useForm({
-		// defaultValues: {
-		// 	photo: '',
-		// 	title: '',
-		// 	description: '',
-		// 	city: '',
-		// 	date: '',
-		// 	time_start: '',
-		// 	time_end: '',
-		// }
+		defaultValues: {
+			photo: '',
+			title: '',
+			description: '',
+			city: '',
+			date: '',
+			time_start: '',
+			time_end: '',
+		}
 	});
 
 	function previewFile(data: any) {
 		console.log(data.target.files[0])
 
 		if (data.target.files && data.target.files[0]) {
+			// const url = URL.createObjectURL(data.target.files[0]);
 			setPhoto(URL.createObjectURL(data.target.files[0]));
-		}	
-	
-        // const file = data;
-        // const reader = new FileReader();
-    
-        // reader.addEventListener(
-        // "load",
-        //     () => {
-        //         let result = reader.result as string;
-        //         // result = result.replace('application/octet-stream', 'image/jpg');
-        //         imgRef.current!.src = result;
-        //         setPhoto(reader.result)
-        //     },
-        //     false,
-        // );
-  
-        // if (file) {
-        //     reader.readAsDataURL(new Blob(file, { type: "image/jpg" }));
-        // }
+			
+			fileToDataUri(data.target.files[0])
+			.then((dataUri: any) => {
+				setDataUri(dataUri)
+			})
+		}
     }
 
-	const handleLogin = (data: any) => {
-		console.log(data)
+	const createEvent = (data: any) => {
+		data ={...data, photo: dataUri, organizer_id: Number(localStorage.getItem('id'))}
+		postEvent(data);
 	}
 
 	const handleError = (errors: any) => {
 		console.log(errors);
 	};
 
+	async function postEvent(data: any) {
+		try {
+			const res = await axios.post('/api/event', data);
+			if(res.statusText == 'OK'){
+				console.log(res);
+				navigate("/main");
+			}
+		}
+		catch(err) {
+			console.log(err);
+		}
+	}
+
 	return(<>
 		<h2 className='create-event-title'>Создание события</h2>
-		<form onSubmit={handleSubmit(handleLogin, handleError)} className='create-event-form'>
+		<form onSubmit={handleSubmit(createEvent, handleError)} className='create-event-form'>
 			{ photo && <div className='create-event-img'>
 				<img ref={imgRef} src={photo} className='block-event__img' />
             </div> }
@@ -65,7 +80,6 @@ const CreateEvent: FC = () => {
 			<div style={{marginTop: '20px'}}>
 				<ValidatedInput style={{margin: '5px'}}
 					text="Фото" type="file"
-					{...register("photo", { required: true })} 
 					onChange={(e: any) => previewFile(e)} 
 				/>
 			</div>
@@ -73,12 +87,9 @@ const CreateEvent: FC = () => {
 				text='Название мероприятия' type="text" 
 				placeholder='Футбол'
 				{...register("title", { required: true })} />
-			<ValidatedInput text="Описание" type="text" 
-				placeholder='Описание'
-				{...register("description", { required: true })} />
-			{/* <ValidatedInput text="Город" type="text" 
-				placeholder='Описание'
-				{...register("city", { required: true })} /> */}
+			<textarea rows={5} placeholder='Описание' className='textarea'
+				{...register("description", { required: true })}>
+			</textarea>
 			<div className="label">
             	<div className="text">Город</div>
 				<div className="select-block">
@@ -101,7 +112,7 @@ const CreateEvent: FC = () => {
 			</div>
 			<ValidatedInput text="Контакты для связи" type="text" 
 				placeholder='ivan@yandex.ru'/>
-			<ButtonStd type='submit'>Создать</ButtonStd>
+			<ButtonStd style={{height: '40px', marginTop: '30px'}} type='submit'>Создать</ButtonStd>
 			</div>
 		</form>
 	</>)

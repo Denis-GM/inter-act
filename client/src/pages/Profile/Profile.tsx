@@ -5,14 +5,20 @@ import { useNavigate } from 'react-router-dom';
 
 import './Profile.css';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import ListMyEvents from '../Home/components/ListMyEvents/ListMyEvents';
 
 
 const Profile: FC = () => {
   const [account, setAccount] = useState<any>({});
+  const [idUser, setidUser] = useState<any>(localStorage.getItem('id'));
+  const [myEvents, setMyEvents] = useState<any>();
+  const [myEventsSub, setMyEventsSub] = useState<any>();
   const navigate = useNavigate();
 
   useEffect(() => {
     getAccount();
+    getMyEvents();
+    getMyEventsSub();
   }, [])
 
   async function getAccount() {
@@ -21,6 +27,30 @@ const Profile: FC = () => {
       const resData: any = res.data;
       console.log(resData);
       setAccount(resData);
+      
+		}
+    catch(err) {
+      console.log(err);
+		}
+	};
+
+  async function getMyEvents() {
+		try {
+      const res = await axios.get('/api/myEvents/' + idUser);
+      console.log(res.data)
+      setMyEvents(res.data);
+      
+		}
+    catch(err) {
+      console.log(err);
+		}
+	};
+
+  async function getMyEventsSub() {
+		try {
+      const res = await axios.get('/api/myEventsSub/' + idUser);
+      console.log(res.data)
+      setMyEventsSub(res.data);
       
 		}
     catch(err) {
@@ -64,8 +94,8 @@ const Profile: FC = () => {
         </div>
       </div>
       <div className='profile-events-created'>
-        <SectionTitle>Созданные мероприятия</SectionTitle>
         <div></div>
+        { myEvents && <ListMyEvents title='Созданные мероприятия' events={myEvents} />}
       </div>
       <div className='profile-planned-events'>
         <SectionTitle>Запланированные мероприятия</SectionTitle>

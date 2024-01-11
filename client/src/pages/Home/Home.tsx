@@ -31,7 +31,7 @@ const Elementary: FC = () => {
         <div className='inputCity'>Город / Екатеринбург</div>
         { events && 
             <section className='section'>
-            <ListMyEvents events={events} />
+            <ListMyEvents title='Мои мероприятия' events={events} />
             </section>}
         <section className='section'>
             { recEvents && <ListRecEvents events={recEvents} />}

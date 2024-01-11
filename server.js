@@ -9,6 +9,8 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('db.sqlite');
 
 const bodyParser = require('body-parser')
+app.use(bodyParser.json({ limit: '50mb' }));
+
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -24,6 +26,35 @@ app.get('/', (req, res) => {
   res.send('index.html')
 });
 
+// Получить мороприятия, на которые я подписан
+app.get("/api/myEventsSub/:id", (req, res) => {
+  let sql = `SELECT * FROM SubscribeEvent 
+             INNER JOIN Events ON Events.id = SubscribeEvent.event_id
+             WHERE organizer_id = ?`
+  db.all(sql, req.params.id, (error, rows) => {
+    if (error) {
+      res.status(400).json({"error":error.message});
+    }
+    else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// Получить МОИ мороприятия
+app.get("/api/myEvents/:id", (req, res) => {
+  let sql = "SELECT * FROM Events WHERE organizer_id = ?"
+  db.all(sql, req.params.id, (error, rows) => {
+    if (error) {
+      res.status(400).json({"error":error.message});
+    }
+    else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// Получить все мороприятия
 app.get("/api/events", (req, res) => {
   let sql = "SELECT * FROM Events"
   let params = []
@@ -65,9 +96,13 @@ app.get("/api/event/:id", (req, res) => {
 app.post("/api/event", jsonParser, (req, res) => {
   const data = req.body;
   const sql = `INSERT INTO Events
-  (title, description, organizer_id, city, time_start, time_end, photo)
-  VALUES (?, ?, ?, ?, ?, ?, ?)`;
-  db.run(sql, [data.title, data.description, data.organizer_id, data.city, data.time_start, data.time_end, data.photo], 
+  (title, description, organizer_id, city, date, time_start, time_end, photo)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  // const sql = `INSERT INTO Events
+  // (title, description, organizer_id, city, time_start, time_end, photo)
+  // VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  console.log(data)
+  db.run(sql, [data.title, data.description, data.organizer_id, data.city, data.date, data.time_start, data.time_end, data.photo], 
     (err, rows) => {
     if (err) {
       res.status(400).json({"error": err.message});
@@ -126,6 +161,23 @@ app.post("/api/account", jsonParser, (req, res) => {
   });
 });
 
+// Создать событие
+app.post("/api/register", jsonParser, (req, res, next) => {
+  const data = req.body;
+  const sql = `INSERT INTO Users
+  (full_name, email, login, password, photo)
+  VALUES (?, ?, ?, ?, ?)`;
+  db.run(sql, [data.full_name, data.email, data.login, data.password, null], 
+    (err) => {
+    if (err) {
+      res.status(400).json({"error": err.message});
+    }
+    else {
+      res.status(201);
+    }
+  });
+});
+
 // Получить подписку
 app.post("/api/existSubscribe", jsonParser, (req, res) => {
   const data = req.body;
@@ -176,21 +228,6 @@ app.delete("/api/subscribe/:id", (req, res) => {
     }
   });
 });
-
-function checkSubscription(event_id, subscriber_id) {
-  const sql = 'SELECT * FROM SubscribeEvent WHERE event_id = ? AND subscriber_id = ?';
-  console.log(event_id, subscriber_id);
-  db.get(sql, [event_id, subscriber_id], 
-    (err, rows) => {
-      if (err) {
-        return false;
-      }
-      else {
-        return rows;
-      }
-    }
-  )
-}
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)

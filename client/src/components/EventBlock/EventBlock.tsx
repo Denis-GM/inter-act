@@ -17,7 +17,7 @@ const EventBlock: FC<IEventBlock> = ({event, ...props}) => {
   return(
     <div className='event-block'>
       <div className='event-block__header'>
-        <ImageBox data={event.photo.data}></ImageBox>
+        <ImageBox data={event.photo}></ImageBox>
       </div>
       <div className='event-block__main'>
         <div className='event-block__organizer'>{event.organizer}</div>
