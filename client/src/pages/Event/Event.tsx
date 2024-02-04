@@ -18,15 +18,11 @@ const Event: FC = () => {
     async function getEvent() {
         try {
             const res = await axios.get('/api/event/' + params.id);
-            // console.log({event_id: res.data.id, subscriber_id: Number(localStorage.getItem('id'))})
             const subscribe = await axios.post('/api/existSubscribe', 
                 {event_id: res.data.id, subscriber_id: Number(localStorage.getItem('id'))});
             setEvent(res.data);
-            console.log(res.data);
             setSubscribe(subscribe.data);
             setExistSubscribe(subscribe.data.exist);
-            // console.log(res.data);
-            // console.log(subscribe.data.exist);
         }
         catch(err){
             console.log(err);
@@ -61,10 +57,10 @@ const Event: FC = () => {
     
     return(
         <>
-            <div className='event-img'>
-                {event.photo && <ImageBox data={event.photo} className='block-event__img'></ImageBox>}
-            </div>
-                    <div className='title-e'>{event.title}</div>
+            {event.photo && <div className='event-img'>
+                 <ImageBox data={event.photo} className='block-event__img'></ImageBox>
+            </div>}
+            <div className='title-e'>{event.title}</div>
             <div className='title-el'>
                 <div>-</div>
                 { existSubscribe ? 

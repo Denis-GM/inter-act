@@ -26,7 +26,7 @@ const Layout: FC = () => {
             <div className='menu'>
               <NavLink to='main' className={`reset-link setActive`}>Главная</NavLink>
               <NavLink to='collections' className={`reset-link setActive`}>Подборки</NavLink>
-              <NavLink to='organizers' className={`reset-link setActive`}>Организаторы</NavLink>
+              <NavLink to='organizers' className={`reset-link setActive`}>Мероприятия</NavLink>
             </div>
           </li>
           <li className='btns'>

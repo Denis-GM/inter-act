@@ -17,28 +17,28 @@ const Registration: FC = () => {
 
   const navigate = useNavigate();
   
-
-  // Исправить 
   const onSubmit = (data: any) => {
-    const fullName: string = watch("full_name");
-    const email: string = watch("email");
-    const login: string = watch("login");
     const password: string = watch("password");
     const password2: string = watch("password2");
-    if(fullName != '' && login.length > 4 && password.length > 4 && password == password2) {
-      postAccount(
-        {full_name: fullName, email: email, login: login, password: password}
-      );
+    if(password == password2) {
+      postAccount({full_name: data.full_name, email: data.email, login: data.login, password: data.password});
     }
     else {
-      console.log('invalid')
+      alert('Пароли не совпадают')
     }
   }
+
+  const handleError = (errors: any) => {
+    console.log(errors)
+    alert(errors);
+  };
 
 	async function postAccount(data: any) {
 		try {
       const res = await axios.post('/api/register', data);
-      console.log(res.data);
+      if(res.statusText == 'OK'){
+				console.log(res);
+			}
       navigate("/sing-in");
 		}
     catch(err) {
@@ -51,33 +51,33 @@ const Registration: FC = () => {
 		<div className='container-reg'>
 			<h3 className='title'>Регистрация</h3>
 			<div className='main-block-reg'>
-				<form onSubmit={handleSubmit(onSubmit)}
+				<form onSubmit={handleSubmit(onSubmit, handleError)}
           className='main-block-reg__form'>
 					<div>
             <div className='input-reg'>
               <ValidatedInput text="ФИО" type="text" 
-                placeholder='Иванов Иван Иванович'
-                {...register("full_name", { required: true })} validated/>
+                placeholder='Иванов Иван Иванович' isRequired={true}
+                {...register("full_name", { required: true })}/>
 						</div>
 						<div className='input-reg'>
               <ValidatedInput text="Электронная почта" type="email" 
-                placeholder='denis@yandex.ru'
-                {...register("email", { required: true })} validated />
+                placeholder='denis@yandex.ru' isRequired={true}
+                {...register("email", { required: true})}/>
 						</div>
             <div className='input-reg'>
               <ValidatedInput text="Логин" type="text" 
-                placeholder='denis12345'
-                {...register("login", { required: true })} validated />
+                placeholder='denis12345' isRequired={true}
+                {...register("login", { required: true, minLength: 4 })}/>
 						</div>
 						<div className='input-reg'>
               <ValidatedInput text="Пароль" type="password" 
-                placeholder='554409'
-                {...register("password", { required: true })} validated />
+                placeholder='554409' isRequired={true}
+                {...register("password", { required: true, minLength: 4 })}/>
 						</div>
             <div className='input-reg'>
               <ValidatedInput text="Подтвердите пароль" type="password" 
-                placeholder='554409'
-                {...register("password2", { required: true })} validated />
+                placeholder='554409' isRequired={true}
+                {...register("password2", { required: true, minLength: 4 })}/>
 						</div>
 						<Link to="/sign-in" className='link-login'>
 						  Уже есть аккаунт? Войдите

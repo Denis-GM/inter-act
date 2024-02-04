@@ -4,6 +4,7 @@ import ButtonStd from '../../components/ButtonStd/ButtonStd';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+
 import './authentication.css';
 
 const Authentication: FC = () => {
@@ -38,6 +39,7 @@ const Authentication: FC = () => {
 		}
     catch(err) {
       console.log(err);
+      alert('Неверный логин или пароль')
 		}
 	};
   
@@ -51,13 +53,13 @@ const Authentication: FC = () => {
           <div>
             <div className='input-auth'>
               <ValidatedInput text="Логин" type="text" 
-                placeholder='login123' 
+                placeholder='login123' isRequired={true}
                 {...register("login", { required: true })} 
               />
             </div>
             <div className='input-auth'>
               <ValidatedInput text="Пароль" type="password" 
-                placeholder='554409' 
+                placeholder='554409' isRequired={true}
                 {...register("password", { required: true })}
               />
             </div>

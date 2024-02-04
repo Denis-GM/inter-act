@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 20% 80%;
 
-  margin-bottom: 40px;
+  margin: 20px 0 0 0;
 }
 
 .photo-profile {

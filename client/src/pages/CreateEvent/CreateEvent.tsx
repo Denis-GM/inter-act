@@ -38,13 +38,12 @@ const CreateEvent: FC = () => {
 		console.log(data.target.files[0])
 
 		if (data.target.files && data.target.files[0]) {
-			// const url = URL.createObjectURL(data.target.files[0]);
 			setPhoto(URL.createObjectURL(data.target.files[0]));
 			
 			fileToDataUri(data.target.files[0])
-			.then((dataUri: any) => {
-				setDataUri(dataUri)
-			})
+				.then((dataUri: any) => {
+					setDataUri(dataUri)
+				})
 		}
     }
 
@@ -60,6 +59,7 @@ const CreateEvent: FC = () => {
 	async function postEvent(data: any) {
 		try {
 			const res = await axios.post('/api/event', data);
+			navigate("/main");
 			if(res.statusText == 'OK'){
 				console.log(res);
 				navigate("/main");

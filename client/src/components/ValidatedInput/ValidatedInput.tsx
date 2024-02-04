@@ -4,19 +4,21 @@ import './validatedInput.css';
 
 export interface IInputProps extends HTMLProps<HTMLInputElement>{
     text: string,
-    validated?: boolean 
+    isRequired?: boolean,
 }
 
 type InputProps = React.HTMLProps<HTMLInputElement>
 
 const ValidatedInput = forwardRef<HTMLInputElement | InputProps, IInputProps>(
-    ({text, validated, ...props}: IInputProps , ref: React.ForwardedRef<any>): JSX.Element => {
+    ({text, isRequired = false, ...props}: IInputProps , ref: React.ForwardedRef<any>): JSX.Element => {
     return(
         <div className="label">
-            <div className="text">{text}</div>
+            <div className="text">
+                {text}
+                {isRequired && <span style={{color: 'red', marginLeft: '5px'}}>*</span>}
+            </div>
             <div className="input-block">
                 <input {...props} className="input" ref={ref}/>
-                { validated && <div className="indicator"></div>}
             </div>
         </div>
     )

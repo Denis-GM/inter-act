@@ -5,52 +5,22 @@ import { useNavigate } from 'react-router-dom';
 
 import './Profile.css';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
-import ListMyEvents from '../Home/components/ListMyEvents/ListMyEvents';
 
 
 const Profile: FC = () => {
   const [account, setAccount] = useState<any>({});
-  const [idUser, setidUser] = useState<any>(localStorage.getItem('id'));
-  const [myEvents, setMyEvents] = useState<any>();
-  const [myEventsSub, setMyEventsSub] = useState<any>();
+  const [idUser, setIdUser] = useState<any>(localStorage.getItem('id'));
   const navigate = useNavigate();
 
   useEffect(() => {
     getAccount();
-    getMyEvents();
-    getMyEventsSub();
   }, [])
 
   async function getAccount() {
 		try {
       const res = await axios.post('/api/account', {id: localStorage.getItem('auth-token')});
       const resData: any = res.data;
-      console.log(resData);
       setAccount(resData);
-      
-		}
-    catch(err) {
-      console.log(err);
-		}
-	};
-
-  async function getMyEvents() {
-		try {
-      const res = await axios.get('/api/myEvents/' + idUser);
-      console.log(res.data)
-      setMyEvents(res.data);
-      
-		}
-    catch(err) {
-      console.log(err);
-		}
-	};
-
-  async function getMyEventsSub() {
-		try {
-      const res = await axios.get('/api/myEventsSub/' + idUser);
-      console.log(res.data)
-      setMyEventsSub(res.data);
       
 		}
     catch(err) {
@@ -62,11 +32,13 @@ const Profile: FC = () => {
     localStorage.setItem('auth-token', '');
     localStorage.setItem('name', '');
     localStorage.setItem('login', '');
+    localStorage.setItem('id', '');
     navigate('/main')
   }
 
   return(
     <>
+      {/* <h2 style={{fontSize: '20px', margin: '20px auto 40px'}}>Личный кабинет</h2> */}
       <div className='profile-main-block'>
         <img src="" alt="photo" className='photo-profile'/>
         <div className='profile-main-block__content'>
@@ -88,18 +60,10 @@ const Profile: FC = () => {
               <ButtonStd onClick={exitAccount}>Выйти</ButtonStd>
             </div>
             <div className='btn-exit'>
-              <ButtonStd onClick={exitAccount}>Изменить данные</ButtonStd>
+              <ButtonStd >Изображение</ButtonStd>
             </div>
           </div>
         </div>
-      </div>
-      <div className='profile-events-created'>
-        <div></div>
-        { myEvents && <ListMyEvents title='Созданные мероприятия' events={myEvents} />}
-      </div>
-      <div className='profile-planned-events'>
-        <SectionTitle>Запланированные мероприятия</SectionTitle>
-        <div></div>
       </div>
     </>
   )

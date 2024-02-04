@@ -7,7 +7,7 @@ interface ISearch extends HTMLProps<HTMLInputElement> {
 
 const Search: FC<ISearch> = ({func, ...props}) => {
   return(
-    <div >
+    <div {...props}>
       <form className="c-form">
         <input type="search" placeholder="Поиск по названию"
           className="search" onChange={func} name="search"/>

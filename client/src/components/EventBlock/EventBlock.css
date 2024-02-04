@@ -1,19 +1,17 @@
 .event-block {
   width: 30%;
   position: relative;
-  /* background-color: bisque; */
-  /* box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.15); */
   border-radius: 4px;
-  border-bottom: 1px solid rgba(179, 179, 179, 0.476) ;
-
-  user-select: none;
-  /* cursor: pointer; */
+  border: 1px solid rgba(179, 179, 179, 0.476) ;
+  margin-bottom: 40px;
 }
 
 .event-block:hover {
-  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.15);
+  border: none;
+  /* box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15); */
+  
+  box-shadow: 0px 1px 5px 0px rgba(134, 134, 134, 0.5); 
   border-bottom: none;
-  /* box-shadow: 0px 4px 25px 0px rgba(0, 0, 0, 0.25); */
 }
 
 .event-block__header {
@@ -40,7 +38,7 @@
   position: relative;
 
 	padding: 5px 20px;
-	border-radius: 12px;
+	border-radius: 5px;
   border: none;
   background-color: rgb(84, 84, 212);
   color: azure;
@@ -50,4 +48,22 @@
 
 .link-standard:hover {
   
+}
+
+.link-standard-delete {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  position: relative;
+
+	padding: 5px 20px;
+	border-radius: 5px;
+  border: none;
+  background-color: rgb(212, 122, 84);
+  color: azure;
+
+  cursor: pointer;
+
+  margin-top: 10px;
 }

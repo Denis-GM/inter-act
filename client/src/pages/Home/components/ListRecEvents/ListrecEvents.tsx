@@ -14,7 +14,7 @@ const ListRecEvents: FC<{events: any}> = ({events}) => {
     return (<>
         <SectionTitle func={updateActiveRecEvents}>Редомендации</SectionTitle>
         {isActiveRecEvents && 
-        <div className='content'>
+        <div className='content-list-events'>
             {events.map((event: any) => (
                 <EventBlock key={event.id} event={event}></EventBlock>)
             )}
